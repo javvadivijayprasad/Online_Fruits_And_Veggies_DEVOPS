@@ -15,7 +15,7 @@ stage('Build') {
             
                if (fileExists('E:/Application/Build.zip')) {
                  bat '''cd /
-                cd E:/Application
+                cd /Application
                 del /f Build.zip'''
                 } else {
                   echo 'No Build.zip Found'
@@ -43,7 +43,8 @@ stage('Build') {
                  
                if(Build_pass){
                  
-              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+             bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+
 ssh -o "StrictHostKeyChecking no" -i "C:/Users/Dell/Desktop/Devops.pem" ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
 '''
 
@@ -87,6 +88,7 @@ stage('Deploy_to_QA'){
 				 try{
 				 
               bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-52-66-54-73.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+
 ssh -o "StrictHostKeyChecking no" -i "C:/Users/Adroitent/Desktop/Devops.pem" ec2-user@ec2-52-66-54-73.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
 '''
 
@@ -133,6 +135,7 @@ steps {
 			   
                  
               bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-35-154-205-94.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+
 ssh -o "StrictHostKeyChecking no" -i "C:/Users/Adroitent/Desktop/Devops.pem" ec2-user@ec2-35-154-205-94.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh"
 '''
 }
