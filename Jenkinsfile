@@ -45,7 +45,7 @@ stage('Build') {
                  
              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
 
-ssh -o "StrictHostKeyChecking no" -i "C:/Users/Dell/Desktop/Devops.pem" ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
+ssh -o "StrictHostKeyChecking no" -i "C:/Users/Adroitent/Desktop/Devops.pem" ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
 '''
 
 }
