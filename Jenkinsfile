@@ -13,15 +13,15 @@ stage('Build') {
                script{
         try{
             
-               if (fileExists('C:/Users/Dell/Desktop/Temparary/Build.zip')) {
+               if (fileExists('E:/Application/Build.zip')) {
                  bat '''cd /
-                cd Users/Dell/Desktop/Temparary
+                cd E:/Application
                 del /f Build.zip'''
                 } else {
                   echo 'No Build.zip Found'
                 }
-                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vineetmurari/Online_Fruits_And_Veggies_DEVOPS.git']]])
-				fileOperations([fileZipOperation(folderPath: '', outputFolderPath: 'C:/Users/Dell/Desktop/Temparary/'), fileRenameOperation(destination: 'C:/Users/Dell/Desktop/Temparary/Build.zip', source: 'C:/Users/Dell/Desktop/Temparary/CI_CD_Pipeline_main.zip')]) 
+                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/javvadivijayprasad/Online_Fruits_And_Veggies_DEVOPS.git']]])
+				fileOperations([fileZipOperation(folderPath: '', outputFolderPath: 'E:/Application/'), fileRenameOperation(destination: 'E:/Application/Build.zip', source: 'E:/Application/CI_CD_Pipeline.zip')]) 
         }
         catch (Exception e){
         Build_pass = false
@@ -43,8 +43,7 @@ stage('Build') {
                  
                if(Build_pass){
                  
-              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Dell/Desktop/Devops.pem" C:/Users/Dell/Desktop/Temparary/Build.zip ec2-user@ec2-15-207-51-140.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
-
+              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-65-0-72-161.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
 ssh -o "StrictHostKeyChecking no" -i "C:/Users/Dell/Desktop/Devops.pem" ec2-user@ec2-15-207-51-140.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
 '''
 
@@ -62,7 +61,7 @@ stage('UnitTest'){
 	 if(Deploy_to_Dev_pass){
 	 
 	 try{
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vineetmurari/UnitTests_Devops.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/javvadivijayprasad/UnitTests_Devops.git']]])
 		bat 'mvn clean test'
 		}
 		catch(Exception e){
@@ -87,9 +86,8 @@ stage('Deploy_to_QA'){
                  
 				 try{
 				 
-              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Dell/Desktop/Devops.pem" C:/Users/Dell/Desktop/Temparary/Build.zip ec2-user@ec2-13-232-246-145.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
-
-ssh -o "StrictHostKeyChecking no" -i "C:/Users/Dell/Desktop/Devops.pem" ec2-user@ec2-13-232-246-145.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
+              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-52-66-54-73.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+ssh -o "StrictHostKeyChecking no" -i "C:/Users/Adroitent/Desktop/Devops.pem" ec2-user@ec2-52-66-54-73.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
 '''
 
 }
@@ -112,7 +110,7 @@ stage('E2e_tests'){
  
  try{
  
- checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/vineetmurari/E2E_tests_Devops.git']]])
+ checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/javvadivijayprasad/E2E_tests_Devops.git']]])
 bat 'mvn clean test -DsuiteXmlFile=testng.xml'
 
 }
@@ -134,11 +132,9 @@ steps {
                if(E2e_tests_pass){
 			   
                  
-              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Dell/Desktop/Devops.pem" C:/Users/Dell/Desktop/Temparary/Build.zip ec2-user@ec2-13-234-113-126.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
-
-ssh -o "StrictHostKeyChecking no" -i "C:/Users/Dell/Desktop/Devops.pem" ec2-user@ec2-13-234-113-126.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh" 
+              bat '''scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "C:/Users/Adroitent/Desktop/Devops.pem" E:/Application/Build.zip ec2-user@ec2-35-154-205-94.ap-south-1.compute.amazonaws.com:/home/ec2-user/EAPP
+ssh -o "StrictHostKeyChecking no" -i "C:/Users/Adroitent/Desktop/Devops.pem" ec2-user@ec2-35-154-205-94.ap-south-1.compute.amazonaws.com "cd EAPP; sh deployment.sh"
 '''
-
 }
 }
 }
